@@ -7,7 +7,7 @@ public class SkeletonScript : MonoBehaviour
     [SerializeField] float attackRange, sightRange;
     [SerializeField] Transform player;
     [SerializeField] LayerMask playerLayer, groundLayer;
-    [SerializeField] float patrolRange;
+    [SerializeField] float patrolRange = 100.0f;
     [SerializeField] GameObject enemySlash;
     [SerializeField] Transform slashTransform;
     Vector3 walkPoint;
@@ -60,13 +60,14 @@ public class SkeletonScript : MonoBehaviour
 
     void Patrol()
     {
-        if(!walkPointSet) SearchWalkPoint();
+        if (!walkPointSet) SearchWalkPoint();
         
         Vector3 distanceToWalk = transform.position - walkPoint;
         if (distanceToWalk.magnitude < 1.0f) walkPointSet = false;
         
         if (walkPointSet)
         {
+            Debug.Log(walkPoint);
             agent.SetDestination(walkPoint);
         }
     }
