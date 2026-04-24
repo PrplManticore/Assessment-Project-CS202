@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded;
     float verticalVelocity = -2.0f;
     float gravity = -9.81f;
+    // float life = 3f;
 
     [HideInInspector] public bool IsJumping;
 

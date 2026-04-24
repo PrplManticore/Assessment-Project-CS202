@@ -4,7 +4,8 @@ using UnityEngine.AI;
 public class SkeletonScript : MonoBehaviour
 {
     NavMeshAgent agent;
-    [SerializeField] float attackRange, sightRange;
+    [SerializeField] float attackRange = 30.0f, sightRange = 60.0f;
+    // [SerializeField] float contact = 1.0f;
     [SerializeField] Transform player;
     [SerializeField] LayerMask playerLayer, groundLayer;
     [SerializeField] float patrolRange = 100.0f;
@@ -13,6 +14,7 @@ public class SkeletonScript : MonoBehaviour
     Vector3 walkPoint;
 
     bool playerInSightRange, playerInAttackRange;
+    bool basicAttackInContactRange;
     bool walkPointSet;
     bool alreadyAttacking = false;
 
@@ -49,7 +51,7 @@ public class SkeletonScript : MonoBehaviour
             Instantiate(enemySlash, slashTransform.position, slashTransform.rotation);
 
             alreadyAttacking = true;
-            Invoke(nameof(ResetAttack), 1.0f);
+            Invoke(nameof(ResetAttack), 3.0f);
         }
     }
 
