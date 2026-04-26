@@ -1627,7 +1627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 217290718317155764, guid: 5891485f1f429a14e87a01628842307d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.44
+      value: 0.038
       objectReference: {fileID: 0}
     - target: {fileID: 217290718317155764, guid: 5891485f1f429a14e87a01628842307d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2212,10 +2212,17 @@ MonoBehaviour:
   cameraTransform: {fileID: 330585546}
   basicAttack: {fileID: 1332413316}
   basicTransform: {fileID: 763133538}
+  attackRange: 30
+  enemy: {fileID: 1427735350}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   moveInput: {x: 0, y: 0}
-  speed: 2.8
+  speed: 4
   rotationSmoothTime: 0.1
   jumpHeight: 0.4
+  life: 3
+  maxLife: 3
   IsJumping: 0
 --- !u!143 &1294615295
 CharacterController:
@@ -2410,6 +2417,9 @@ MonoBehaviour:
   patrolRange: 10
   enemySlash: {fileID: 1332413316}
   slashTransform: {fileID: 763133538}
+  life: 1
+  playerInSightRange: 0
+  playerInAttackRange: 0
 --- !u!143 &1427735344
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2480,6 +2490,11 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!4 &1427735350 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2199628841774520173, guid: 61b3e3801d56a3f429556c96ea2f07d6, type: 3}
+  m_PrefabInstance: {fileID: 237774436}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1444772717
 GameObject:
   m_ObjectHideFlags: 0

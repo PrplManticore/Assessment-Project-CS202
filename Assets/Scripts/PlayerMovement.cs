@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform cameraTransform;
     [SerializeField] GameObject basicAttack;
     [SerializeField] Transform basicTransform;
+    [SerializeField] float attackRange = 30.0f;
+    [SerializeField] Transform enemy;
+    [SerializeField] LayerMask enemyLayer;
 
     InputActionMap actionMap;
     InputAction moveAction;
@@ -25,9 +28,11 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded;
     float verticalVelocity = -2.0f;
     float gravity = -9.81f;
-    // float life = 3f;
+    public float life = 3.0f;
+    public float maxLife = 3.0f;
 
     [HideInInspector] public bool IsJumping;
+    SlashScript damageDealt;
 
     private void Awake()
     {
@@ -52,11 +57,26 @@ public class PlayerMovement : MonoBehaviour
         heroController = GetComponent<CharacterController>();
     }
 
+    public void EndGame()
+    {
+        // Standard command for built applications
+        Application.Quit();
+
+        // Exit play mode in the Unity Editor
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+    }
+
     void Update()
     {
         if (attackAction.WasPressedThisFrame())
         {
             Instantiate(basicAttack, basicTransform.position, basicTransform.rotation);
+            if (damageDealt)
+            {
+                enemy.GetComponent<SkeletonScript>().life -= 1.0f;
+            }
         }
 
         isGrounded = heroController.isGrounded;
@@ -92,5 +112,11 @@ public class PlayerMovement : MonoBehaviour
         }
         Vector3 velocity = moveDir * speed + Vector3.up * verticalVelocity * gravity * -1;
         heroController.Move(velocity * Time.deltaTime);
-    }
+
+        if (life == 0.0f)
+        {
+            Destroy(gameObject);
+            EndGame();
+        }
+    }   
 }

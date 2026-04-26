@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -5,18 +6,18 @@ public class SkeletonScript : MonoBehaviour
 {
     NavMeshAgent agent;
     [SerializeField] float attackRange = 30.0f, sightRange = 60.0f;
-    // [SerializeField] float contact = 1.0f;
     [SerializeField] Transform player;
     [SerializeField] LayerMask playerLayer, groundLayer;
     [SerializeField] float patrolRange = 100.0f;
     [SerializeField] GameObject enemySlash;
     [SerializeField] Transform slashTransform;
     Vector3 walkPoint;
+    public float life = 1.0f;
 
-    bool playerInSightRange, playerInAttackRange;
-    bool basicAttackInContactRange;
+    public bool playerInSightRange, playerInAttackRange;
     bool walkPointSet;
     bool alreadyAttacking = false;
+    SlashScript damageDealt;
 
     private void Awake()
     {
@@ -31,6 +32,8 @@ public class SkeletonScript : MonoBehaviour
         if (!playerInSightRange && !playerInAttackRange) Patrol();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
+
+        if (life == 0.0f) Destroy(gameObject);
     }
 
     void ChasePlayer()
@@ -52,6 +55,10 @@ public class SkeletonScript : MonoBehaviour
 
             alreadyAttacking = true;
             Invoke(nameof(ResetAttack), 3.0f);
+            if (damageDealt)
+            {
+                player.GetComponent<PlayerMovement>().life -= 1.0f;
+            }
         }
     }
 
